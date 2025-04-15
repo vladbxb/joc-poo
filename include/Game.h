@@ -1,24 +1,23 @@
 #pragma once
 
-#include "Player.h"
+#include "InputManager.h"
 #include <SFML/Graphics.hpp>
 
 class Game
 {
 private:
 	sf::RenderWindow window;
+	InputManager inputManager;
 	sf::Vector2i windowDim;
 	sf::Vector2f mouseCoords;
 	sf::Color backgroundColor;
-	Player player;
+	// Player player;
 	const int frameRate;
 	void processEvents();
 	void resize(int width, int height);
-	void clear();
 	void update();
-	void draw();
+	void render();
 
-	friend class Player;
 public:
 	Game();
 	void run();
