@@ -4,6 +4,7 @@
 
 class IDrawable
 {
+public:
 	// abstract method (needs to be overridden)
 	virtual void draw(sf::RenderTarget& target) const = 0;
 	// default destructor

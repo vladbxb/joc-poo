@@ -16,6 +16,8 @@ private:
 	// the proportions in relation to the game size
 	const float WIDTH_PROP = 0.1f;
 	const float HEIGHT_PROP = 0.2f;
+
+	// sf::Vector2f anchorPoint;
 public:
 	// the constructor
 	// which will receive the logical size
@@ -26,10 +28,10 @@ public:
 
 	// we're inheriting from IDrawable so we must
 	// have a draw method
-	void draw(sf::RenderTarget& target) override;
+	void draw(sf::RenderTarget& target) const override;
 
 	// this is a helper function for the Rope to easily
 	// access the coordinates of the end that sticks to the
 	// boat!
-	sf::Vector2f getTowingPoint() const;
+	sf::Vector2f getAnchorPoint() const;
 };

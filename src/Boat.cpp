@@ -13,7 +13,7 @@ Boat::Boat(const sf::Vector2f& logicalSize)
 	// color
 	this->shape.setFillColor(sf::Color::Yellow);
 	// origin is top middle
-	// BE CAREFUL WITH THIS! this can break getTowingPoint()
+	// BE CAREFUL WITH THIS! this can break getAnchorPoint()
 	// if changed (or if it doesn't exist)
 	this->shape.setOrigin(width / 2.f, 0.f);
 	// now we declare the position, which should be
@@ -23,18 +23,20 @@ Boat::Boat(const sf::Vector2f& logicalSize)
 	float posX = logicalSize.x / 2.f;
 	// Y coordinate is a little bit under the "roof"
 	// of the game
-	float posY = logicalSize.y / 0.25f;
+	float posY = logicalSize.y * 0.1f;
+
 	sf::Vector2f boatPos(posX, posY);
+
 	this->shape.setPosition(boatPos);
 }
 
-void Boat::draw(sf::RenderTarget& target)
+void Boat::draw(sf::RenderTarget& target) const
 {
 	// we just draw the constructed shape for now
 	target.draw(this->shape);
 }
 
-sf::Vector2f Boat::getTowingPoint() const
+sf::Vector2f Boat::getAnchorPoint() const
 {
 	// we want to return kind of the bottom middle
 	// part of the boat (that's just logical)
@@ -48,8 +50,8 @@ sf::Vector2f Boat::getTowingPoint() const
 	// now, we need to grab this part in terms of the origin
 	float origin = boatSize.x / 2.f;
 	// WE'RE ASSUMING THE ORIGIN WAS SET TO TOP CENTER HERE!!!
-	sf::Vector2f towOffset(0.f, boatSize.y);
+	sf::Vector2f anchorOffset(0.f, boatSize.y);
 	// so this method depends on the origin being set correctly
 	// for prototyping reasons
-	return boatPos + towOffset;
+	return boatPos + anchorOffset;
 }

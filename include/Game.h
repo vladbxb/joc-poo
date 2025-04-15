@@ -1,6 +1,7 @@
 #pragma once
 
 #include "InputManager.h"
+#include "Player.h"
 #include <SFML/Graphics.hpp>
 
 class Game
@@ -9,13 +10,14 @@ private:
 	sf::RenderWindow window;
 	InputManager inputManager;
 	sf::Vector2i windowDim;
-	sf::Vector2f mouseCoords;
+	sf::Vector2f logicalSize;
 	sf::Color backgroundColor;
-	// Player player;
+	sf::Clock clock;
+	Player player;
 	const int frameRate;
 	void processEvents();
 	void resize(int width, int height);
-	void update();
+	void update(float dt);
 	void render();
 
 public:
