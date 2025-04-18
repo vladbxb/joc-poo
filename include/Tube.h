@@ -26,7 +26,7 @@ private:
 
 public:
 	//Tube();
-	Tube(const sf::Vector2f& boatAnchor, const sf::Vector2f& logicalSize);
+	Tube(const sf::Vector2f boatAnchor, const sf::Vector2f& logicalSize);
 
 	// we won't use dt because the circle
 	// should instantly snap to the mouse
@@ -45,5 +45,4 @@ public:
 	void onMouseReleased(sf::Mouse::Button, int x, int y) override {}
 	// needed for the rope!	
 	sf::Vector2f getAttachmentPoint() const;
-	void setAnchorPoint(const sf::Vector2f& point);
 };

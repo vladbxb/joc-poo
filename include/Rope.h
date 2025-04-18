@@ -13,11 +13,16 @@ private:
 	// we basically just use the references
 	// to the anchor point and attachment point
 	// so it's easy to update
-	const sf::Vector2f& start;
-	const sf::Vector2f& end;
-	const sf::Color ropeColor;
+	// const sf::Vector2f start;
+	// const sf::Vector2f end;
+	sf::Vector2f start;
+	sf::Vector2f end;
+	const sf::Color ROPE_COLOR;
+	const float ROPE_WIDTH;
+	const float PI;
 public:
-	Rope(const sf::Vector2f& start, const sf::Vector2f& end);
+	Rope(const sf::Vector2f start, const sf::Vector2f end);
 	// draw overridden abstract method from IDrawable
 	void draw(sf::RenderTarget& target) const override;
+	void update(sf::Vector2f start, sf::Vector2f end);
 };

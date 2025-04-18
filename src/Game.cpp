@@ -51,7 +51,10 @@ Game::Game() : window(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), GAME_NAME), logica
 
 	std::unique_ptr<MouseInputHandler> mouseInputHandler = std::make_unique<MouseInputHandler>();
 
-	mouseInputHandler->addListener(&player.getTube());
+	MouseInputHandler* mouseInputHandlerRawP = mouseInputHandler.get();
+
+	// mouseInputHandler->addListener(&player.getTube());
+	this->player.addMouseDetection(*mouseInputHandlerRawP);
 
 	this->inputManager.addHandler(std::move(mouseInputHandler));
 }
