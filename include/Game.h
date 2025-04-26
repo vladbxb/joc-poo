@@ -1,6 +1,7 @@
 #pragma once
 
 #include "InputManager.h"
+#include "obstacles/ObstacleManager.h"
 #include "Player.h"
 #include <SFML/Graphics.hpp>
 
@@ -9,6 +10,7 @@ class Game
 private:
 	sf::RenderWindow window;
 	InputManager inputManager;
+	ObstacleManager obstacleManager;
 	sf::Vector2i windowDim;
 	sf::Vector2f logicalSize;
 	sf::Color backgroundColor;

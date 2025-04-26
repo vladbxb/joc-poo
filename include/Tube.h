@@ -6,8 +6,20 @@
 
 // the Tube (which is moved by the player)
 // should be drawable, updatable and also a listener
-// because we need to know the mouse coordinates at all times
-class Tube : public IDrawable, public IUpdatable, public IMouseListener
+// because the mouse coordinates need to be known
+// at all times
+//
+// using both public and private inheritance. the Tube
+// shouldn't be treated separately, but be treated only
+// when the Player is as a whole.
+// the mouse listener public inheritance is ok, because
+// polymorphism might be needed later
+// 
+// TODO: modify public inheritance if listeners and handlers
+// 		 are treated as templates in the future
+
+
+class Tube : private IDrawable, private IUpdatable, public IMouseListener
 {
 private:
 	// we're gonna use a SFML circle for now

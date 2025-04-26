@@ -1,6 +1,11 @@
 #include "Game.h"
 #include <string>
 
+
+// remove these dependencies later
+#include "obstacles/Rock.h"
+#include "obstacles/Buoy.h"
+
 const unsigned int GAME_WIDTH = 1280;
 const unsigned int GAME_HEIGHT = 720;
 const unsigned int FRAME_RATE = 60;
@@ -32,6 +37,7 @@ void Game::processEvents()
 
 void Game::update(float dt)
 {
+	this->obstacleManager.update(dt);
 	this->player.update(dt);
 }
 
@@ -40,6 +46,7 @@ void Game::render()
 	this->window.clear(this->backgroundColor);
 	// technically, this is where all of the IDrawables should have their
 	// draw methods called!
+	this->obstacleManager.draw(this->window);
 	this->player.draw(this->window);
 	this->window.display();
 }
@@ -53,7 +60,6 @@ Game::Game() : window(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), GAME_NAME), logica
 
 	MouseInputHandler* mouseInputHandlerRawP = mouseInputHandler.get();
 
-	// mouseInputHandler->addListener(&player.getTube());
 	this->player.addMouseDetection(*mouseInputHandlerRawP);
 
 	this->inputManager.addHandler(std::move(mouseInputHandler));
@@ -64,6 +70,25 @@ void Game::run()
 	// calculating delta time here
 	sf::Time time = this->clock.restart();
 	float dt = time.asSeconds();
+
+
+
+
+	// TODO: state management
+	// these are placeholders CHANGE THESE LATER
+	// LEVEL 1 OBSTACLES
+	std::vector<std::unique_ptr<Obstacle>> obstacles;
+	obstacles.push_back(std::make_unique<Rock>());
+	obstacles.push_back(std::make_unique<Buoy>());
+	this->obstacleManager.setObstacleTemplate(obstacles);
+	// LEVEL 1 SPAWNING INTERVAL
+	this->obstacleManager.setSpawnInterval(0.002f);
+	// turn it on
+	this->obstacleManager.toggle();
+
+
+
+
 	// the actual game loop
 	while (this->window.isOpen())
 	{

@@ -8,8 +8,10 @@
 
 //Tube::Tube() {}
 
+// previous ropeLength value (18 apr): 0.35f * logicalSize.y
+
 Tube::Tube(const sf::Vector2f boatAnchor, const sf::Vector2f& logicalSize)
-	: boatAnchor(boatAnchor), ropeLength(0.35f * logicalSize.y), mouseX(boatAnchor.x)
+	: boatAnchor(boatAnchor), ropeLength(0.5f * logicalSize.y), mouseX(boatAnchor.x)
 {
 	// change this later if needed
 	// the radius (half width) of the tube
@@ -19,7 +21,10 @@ Tube::Tube(const sf::Vector2f boatAnchor, const sf::Vector2f& logicalSize)
 	// set the origin to the top middle part
 	// because the rope is the projection
 	// to the arc of the semicircle
-	this->shape.setOrigin(radius, 0.f);
+	//
+	// JUST A TEST, DELETE AFTER
+	this->shape.setOrigin(radius, radius);
+	//this->shape.setOrigin(radius, 0.f);
 	// sets the tube color to red
 	this->shape.setFillColor(sf::Color::Red);
 

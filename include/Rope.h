@@ -7,7 +7,11 @@
 #include "IDrawable.h"
 #include <SFML/Graphics/Color.hpp>
 
-class Rope : public IDrawable
+// using private inheritance as to
+// not expose Rope polymorphically
+// (it shouldn't be treated as a separate
+// drawable object)
+class Rope : private IDrawable
 {
 private:
 	// we basically just use the references

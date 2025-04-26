@@ -8,16 +8,17 @@
 // it's only drawable, it doesn't have to update.
 // it's not dynamic, it stays still
 
-class Boat : public IDrawable
+// using private inheritance because the boat must not be
+// treated separately
+class Boat : private IDrawable
 {
 private:
 	// at the moment it's just made of a rectangle
 	sf::RectangleShape shape;
 	// the proportions in relation to the game size
 	const float WIDTH_PROP = 0.1f;
-	const float HEIGHT_PROP = 0.2f;
-
-	// sf::Vector2f anchorPoint;
+	const float HEIGHT_PROP = 0.25f;
+	sf::Vector2f anchorPoint;
 public:
 	// the constructor
 	// which will receive the logical size

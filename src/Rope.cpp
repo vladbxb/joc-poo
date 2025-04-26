@@ -7,7 +7,7 @@
 #include <iostream>
 #include <cmath>
 
-Rope::Rope(const sf::Vector2f start, const sf::Vector2f end) : start(start), end(end), ROPE_COLOR(74, 37, 15), ROPE_WIDTH(1.5f), PI(3.141592) {}
+Rope::Rope(const sf::Vector2f start, const sf::Vector2f end) : start(start), end(end), ROPE_COLOR(74, 37, 15), ROPE_WIDTH(3.5f), PI(3.141592) {}
 
 void Rope::draw(sf::RenderTarget& target) const
 {
@@ -37,6 +37,8 @@ void Rope::draw(sf::RenderTarget& target) const
 	// i can't think of a better way of doing it without
 	// coupling stuff for no reason
 	sf::RectangleShape ropeShape(sf::Vector2f(ropeLength, this->ROPE_WIDTH));
+	
+	ropeShape.setOrigin(0.f, this->ROPE_WIDTH / 2);
 	ropeShape.setPosition(this->end);
 	ropeShape.setFillColor(this->ROPE_COLOR);
 	ropeShape.setRotation(angleInDegs);

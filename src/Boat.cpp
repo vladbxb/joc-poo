@@ -24,7 +24,7 @@ Boat::Boat(const sf::Vector2f& logicalSize)
 	float posX = logicalSize.x / 2.f;
 	// Y coordinate is a little bit under the "roof"
 	// of the game
-	float posY = logicalSize.y * 0.2f;
+	float posY = logicalSize.y * 0.05f;
 
 	sf::Vector2f boatPos(posX, posY);
 
