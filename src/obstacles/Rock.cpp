@@ -34,7 +34,7 @@ Rock::Rock(const Rock& other)
 void Rock::update(float deltaTime)
 {
 	// moves the shape down one pixel at a time in a straight line
-	this->shape->move(0.f, 80000.f * deltaTime);
+	this->shape->move(0.f, 130.f * deltaTime);
 }
 
 // factory method (centralizes each obstacle type's creation)

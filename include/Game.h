@@ -2,6 +2,7 @@
 
 #include "InputManager.h"
 #include "obstacles/ObstacleManager.h"
+#include "CollisionManager.h"
 #include "Player.h"
 #include <SFML/Graphics.hpp>
 
@@ -11,6 +12,7 @@ private:
 	sf::RenderWindow window;
 	InputManager inputManager;
 	ObstacleManager obstacleManager;
+	CollisionManager collisionManager;
 	sf::Vector2i windowDim;
 	sf::Vector2f logicalSize;
 	sf::Color backgroundColor;

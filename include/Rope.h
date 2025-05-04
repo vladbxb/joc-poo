@@ -1,32 +1,25 @@
 #pragma once
 
-// the rope just needs to be drawable,
-// its coordinates are updated by the boat
-// and tube themselves
-
-#include "IDrawable.h"
+#include "interfaces/Drawable.h"
+#include "interfaces/Updatable.h"
+#include "graphics/LineSegment.h"
 #include <SFML/Graphics/Color.hpp>
 
-// using private inheritance as to
-// not expose Rope polymorphically
-// (it shouldn't be treated as a separate
-// drawable object)
-class Rope : private IDrawable
+class Rope : public Drawable, public Updatable
 {
 private:
-	// we basically just use the references
-	// to the anchor point and attachment point
-	// so it's easy to update
-	// const sf::Vector2f start;
-	// const sf::Vector2f end;
-	sf::Vector2f start;
-	sf::Vector2f end;
-	const sf::Color ROPE_COLOR;
-	const float ROPE_WIDTH;
-	const float PI;
+	LineSegment ropeSegment;
+	const sf::Vector2f& boatAnchorPoint;
+	const sf::Vector2f& tubeAnchorPoint;
 public:
-	Rope(const sf::Vector2f start, const sf::Vector2f end);
-	// draw overridden abstract method from IDrawable
+	Rope(sf::Vector2f& boatAnchorPoint, sf::Vector2f& tubeAnchorPoint);
+
+	void init();
+	void initOrigin();
+	void initColor();
+	void initPos();
+	void initRotation();
+
 	void draw(sf::RenderTarget& target) const override;
-	void update(sf::Vector2f start, sf::Vector2f end);
+	void update(float dt) override;
 };

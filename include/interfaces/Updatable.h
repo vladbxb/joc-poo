@@ -1,10 +1,10 @@
 #pragma once
 
-class IUpdatable
+class Updatable
 {
 public:
 	// abstract method (needs to be overridden
 	virtual void update(float deltaTime) = 0;
 	// default virtual destructor, might change later
-	virtual ~IUpdatable() = default;
+	virtual ~Updatable() = default;
 };

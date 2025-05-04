@@ -19,18 +19,6 @@ void Game::processEvents()
 	{
 		if (event.type == sf::Event::Closed)
 			this->window.close();
-		// no longer need these since we have InputManager :)
-		//
-		// if (event.type == sf::Event::MouseMoved)
-		// {
-		// 	this->mouseCoords.x = event.mouseMove.x;
-		// 	this->mouseCoords.y = event.mouseMove.y;
-		// }
-		// if (event.type == sf::Event::Resized)
-		// {
-		// 	this->windowDim.x = event.size.width;
-		// 	this->windowDim.y = event.size.height;
-		// }
 		this->inputManager.processEvent(event);
 	}
 }
@@ -39,19 +27,23 @@ void Game::update(float dt)
 {
 	this->obstacleManager.update(dt);
 	this->player.update(dt);
+	this->collisionManager.checkPlayerCollidesObstacles(this->player, this->obstacleManager.getActiveObstacles());
 }
 
 void Game::render()
 {
 	this->window.clear(this->backgroundColor);
-	// technically, this is where all of the IDrawables should have their
-	// draw methods called!
 	this->obstacleManager.draw(this->window);
 	this->player.draw(this->window);
 	this->window.display();
 }
 
-Game::Game() : window(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), GAME_NAME), logicalSize(static_cast<float>(GAME_WIDTH), static_cast<float>(GAME_HEIGHT)), player(this->logicalSize), frameRate(FRAME_RATE)
+Game::Game() : 
+	window(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), GAME_NAME),
+   	logicalSize(static_cast<float>(GAME_WIDTH), static_cast<float>(GAME_HEIGHT)),
+   	player(this->logicalSize),
+   	frameRate(FRAME_RATE),
+	obstacleManager(0.275f * GAME_WIDTH, 0.725f * GAME_WIDTH)
 {
 	this->window.setFramerateLimit(this->frameRate);
 	this->backgroundColor = BACKGROUND_COLOR;
@@ -67,9 +59,6 @@ Game::Game() : window(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), GAME_NAME), logica
 
 void Game::run()
 {
-	// calculating delta time here
-	sf::Time time = this->clock.restart();
-	float dt = time.asSeconds();
 
 
 
@@ -82,7 +71,7 @@ void Game::run()
 	obstacles.push_back(std::make_unique<Buoy>());
 	this->obstacleManager.setObstacleTemplate(obstacles);
 	// LEVEL 1 SPAWNING INTERVAL
-	this->obstacleManager.setSpawnInterval(0.002f);
+	this->obstacleManager.setSpawnInterval(0.8f);
 	// turn it on
 	this->obstacleManager.toggle();
 
@@ -92,6 +81,9 @@ void Game::run()
 	// the actual game loop
 	while (this->window.isOpen())
 	{
+		// calculating delta time here
+		sf::Time time = this->clock.restart();
+		float dt = time.asSeconds();
 		this->processEvents();
 		this->update(dt);
 		this->render();

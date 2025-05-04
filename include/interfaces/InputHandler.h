@@ -2,9 +2,9 @@
 
 #include <SFML/Window/Event.hpp>
 
-class IInputHandler
+class InputHandler
 {
 public:
 	virtual bool handleEvent(const sf::Event& event) = 0;
-	virtual ~IInputHandler() = default;
+	virtual ~InputHandler() = default;
 };

@@ -1,4 +1,7 @@
 #include "obstacles/Obstacle.h"
+#include "Player.h"
+
+#include <iostream>
 
 // createShape() method doesn't have a definition here because
 // it's a pure, virtual function (each "type" of obstacle should
@@ -7,6 +10,19 @@
 void Obstacle::draw(sf::RenderTarget& target) const
 {
 	target.draw(*this->shape);
+}
+
+sf::FloatRect Obstacle::getBounds() const
+{
+	return this->shape->getGlobalBounds();
+}
+
+void Obstacle::onCollision(Collidable& other)
+{
+	if (dynamic_cast<Player*>(&other))
+	{
+		std::cout << "Obstacle hit player!\n";
+	}
 }
 
 // void Obstacle::update(float deltaTime)

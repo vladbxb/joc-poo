@@ -1,46 +1,57 @@
 #include "Tube.h"
-
 #include "TubePos.h"
+#include "obstacles/Buoy.h"
+#include "obstacles/Rock.h"
 
-// the Tube will spawn at the same X coordinate as the 
-// boat middle
-// also the DEFAULT ROPE LENGTH IS 30% of the height of the game
+#include <iostream>
 
-//Tube::Tube() {}
-
-// previous ropeLength value (18 apr): 0.35f * logicalSize.y
-
-Tube::Tube(const sf::Vector2f boatAnchor, const sf::Vector2f& logicalSize)
-	: boatAnchor(boatAnchor), ropeLength(0.5f * logicalSize.y), mouseX(boatAnchor.x)
+Tube::Tube(sf::Vector2f position, float radius, sf::Vector2f origin, sf::Color color, float ropeLength, sf::Vector2f tubeAnchorPosition, sf::Vector2f& boatAnchorPosition) : 
+	position(position), 
+	radius(radius), 
+	origin(origin), 
+	color(color), 
+	ropeLength(ropeLength),
+	tubeAnchorPosition(tubeAnchorPosition),
+	boatAnchorPosition(boatAnchorPosition)
 {
-	// change this later if needed
-	// the radius (half width) of the tube
-	this->radius = 50.f;
-	this->shape.setRadius(radius);
-
-	// set the origin to the top middle part
-	// because the rope is the projection
-	// to the arc of the semicircle
-	//
-	// JUST A TEST, DELETE AFTER
-	this->shape.setOrigin(radius, radius);
-	//this->shape.setOrigin(radius, 0.f);
-	// sets the tube color to red
-	this->shape.setFillColor(sf::Color::Red);
-
-	// we should calculate the position of the boat
-	// by taking the distance between the y coord
-	// of the towing point and the y coord of the 
-	// attachment point
-	sf::Vector2f tubePos(this->boatAnchor.x, this->boatAnchor.y + this->ropeLength);
-	this->shape.setPosition(tubePos);
-
+	this->init();
 }
+
+void Tube::init()
+{
+	this->initRadius();
+	this->initOrigin();
+	this->initColor();
+	this->initPos();
+}
+
+void Tube::initRadius()
+{
+	this->shape.setRadius(radius);
+}
+
+void Tube::initOrigin()
+{
+	this->shape.setOrigin(this->origin);
+}
+
+void Tube::initColor()
+{
+	this->shape.setFillColor(this->color);
+}
+
+void Tube::initPos()
+{
+	this->mouseX = this->position.x;
+	this->shape.setPosition(position);
+}
+
 
 void Tube::update(float dt)
 {
-	sf::Vector2f tubePos = calculateTubePos(this->mouseX, this->boatAnchor, this->ropeLength);
-	this->shape.setPosition(tubePos);
+	this->position = calculateTubePos(this->mouseX, this->boatAnchorPosition, this->ropeLength);
+	this->shape.setPosition(position);
+	this->tubeAnchorPosition = this->position;
 }
 
 void Tube::draw(sf::RenderTarget& target) const
@@ -48,18 +59,33 @@ void Tube::draw(sf::RenderTarget& target) const
 	target.draw(this->shape);
 }
 
-// SFML gives mouse coordinates as pixel position
-// in integers
 void Tube::onMouseMoved(int x, int y)
 {
-	// we have to convert to float because we need
-	// to calculate dx, a rational value
-	mouseX = static_cast<float>(x);
+	// convert to float for
+	// dx calculation, a rational value
+	this->mouseX = static_cast<float>(x);
 }
 
-sf::Vector2f Tube::getAttachmentPoint() const
+sf::FloatRect Tube::getBounds() const
 {
-	// the position is already set to the attachment point
-	// the top middle
-	return this->shape.getPosition();
+	return this->shape.getGlobalBounds();
+}
+
+void Tube::onCollision(Collidable& other)
+{
+	// downcast to pointer (passed in a reference,
+	// so double referencing to convert to pointer)
+	if (dynamic_cast<Rock*>(&other))
+	{
+		std::cout << "Player hit rock!\n";
+	}
+	else if (dynamic_cast<Buoy*>(&other))
+	{
+		std::cout << "Player hit buoy!\n";
+	}
+}
+
+sf::Vector2f& Tube::getAnchor()
+{
+	return this->tubeAnchorPosition;
 }

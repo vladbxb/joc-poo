@@ -13,11 +13,11 @@
 // 	this->createShape(posX);
 // }
 
+
+
 Buoy::Buoy()
 {
 	const float radius = 30.f;
-	// we color the Buoy yellow instead
-	// by copy constructor (i thought it looks nice)
 	const sf::Color color(sf::Color::Yellow);
 	// this creates the concrete shape inside Buoy
 	this->shape = std::make_unique<sf::CircleShape>(radius);
@@ -41,7 +41,7 @@ Buoy::Buoy(const Buoy& other)
 void Buoy::update(float deltaTime)
 {
 	// moves the shape down one pixel at a time in a straight line
-	this->shape->move(0.f, 100000.f * deltaTime);
+	this->shape->move(0.f, 140.f * deltaTime);
 	// std::cout << "Buoy moved at: " << this->shape->getPosition().y << '\n';
 }
 

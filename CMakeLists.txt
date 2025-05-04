@@ -19,6 +19,19 @@ add_executable(main
 	src/Game.cpp
 	src/InputHandlers.cpp
 	src/InputManager.cpp
+	src/Boat.cpp
+	src/Rope.cpp
+	src/TubePos.cpp
+	src/Tube.cpp
+	src/Player.cpp
+	src/obstacles/Obstacle.cpp
+	src/obstacles/Buoy.cpp
+	src/obstacles/Rock.cpp
+	src/obstacles/ObstacleSpawner.cpp
+	src/obstacles/ObstacleManager.cpp
+	src/CollisionManager.cpp
+	src/math/MathFormulas.cpp
+	src/graphics/LineSegment.cpp
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE sfml-graphics)

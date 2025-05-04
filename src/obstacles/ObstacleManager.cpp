@@ -8,8 +8,11 @@
 // FOR DEBUGGING
 #include <iostream>
 
-// starts inactive for testing CHANGE THIS LATER maybe
-ObstacleManager::ObstacleManager() : spawner(this->obstacleTemplate), active(false) {}
+ObstacleManager::ObstacleManager(float leftLim, float rightLim) : 
+	spawner(this->obstacleTemplate, leftLim, rightLim), 
+	active(false),
+	gameWidth(rightLim - leftLim)
+{}
 
 void ObstacleManager::draw(sf::RenderTarget& target) const
 {
@@ -48,6 +51,11 @@ void ObstacleManager::toggle()
 {
 	// negate the bool
 	this->active = !this->active;
+}
+
+const std::vector<std::unique_ptr<Obstacle>>& ObstacleManager::getActiveObstacles() const
+{
+	return this->activeObstacles;
 }
 
 void ObstacleManager::setObstacleTemplate(const std::vector<std::unique_ptr<Obstacle>>& newTemplate)

@@ -12,10 +12,23 @@ private:
 	float timeSinceLastSpawn;
 	float spawnInterval;
 
+	// game bounds
+	float leftLim;
+	float rightLim;
+
 	std::mt19937 rng;
+
 public:
-	ObstacleSpawner(const std::vector<std::unique_ptr<Obstacle>>& obstacleTemplate);
+	ObstacleSpawner(const std::vector<std::unique_ptr<Obstacle>>& obstacleTemplate, float leftLim, float rightLim);
 
 	std::unique_ptr<Obstacle> trySpawning(float deltaTime);
+	std::unique_ptr<Obstacle> spawn();
+
+	void testTemplateEmptiness() const;
+	void resetElapsedTime();
+	int getRandomIndex();
+	int getRandomXValue(float leftLim, float rightLim);
+	std::unique_ptr<Obstacle> cloneRandomObstacle();
+
 	void setSpawnInterval(float spawnInterval);
 };

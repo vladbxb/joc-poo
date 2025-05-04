@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IInputHandler.h"
+#include "interfaces/InputHandler.h"
 #include <memory>
 #include <vector>
 
@@ -22,11 +22,11 @@ class InputManager
 {
 private:
 	// where the handlers reside
-	std::vector<std::unique_ptr<IInputHandler>> handlers;
+	std::vector<std::unique_ptr<InputHandler>> handlers;
 
 public:
 	// method for adding new handlers
-	void addHandler(std::unique_ptr<IInputHandler> handler);
+	void addHandler(std::unique_ptr<InputHandler> handler);
 
 	void processEvent(const sf::Event& event);
 };

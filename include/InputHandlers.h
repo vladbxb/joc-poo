@@ -1,29 +1,24 @@
 #pragma once
 
-#include "IInputHandler.h"
+#include "interfaces/InputHandler.h"
 #include "Listeners.h"
 #include <SFML/Window/Event.hpp>
 #include <vector>
 
 // this is going to actually dispatch the events to the listeners
 // (the objects that need mouse input)
-class MouseInputHandler : public IInputHandler
+class MouseInputHandler : public InputHandler
 {
 private:
-	// we use normal pointers here because the inheriting class doesn't actually own the listeners
-	// so, raw pointers (the usual for observers) is applied here
-	std::vector<IMouseListener*> listeners;
+	// inheriting class doesn't actually own the listeners
+	// use raw pointers
+	std::vector<MouseListener*> listeners;
 public:
 	// the subscribe method
-	void addListener(IMouseListener* listener);
+	void addListener(MouseListener* listener);
 
 	// the unsubscribe method
-	void removeListener(IMouseListener* listener);
+	void removeListener(MouseListener* listener);
 
-	// here we override the method from the abstract
-	// class (interface) IInputHandler
-	//
-	// and we actually apply the Chain of Responsibility principle,
-	// by testing every event until hitting the right one
 	bool handleEvent(const sf::Event& event) override;
 };

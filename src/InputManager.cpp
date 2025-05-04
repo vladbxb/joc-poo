@@ -1,10 +1,10 @@
 #include "InputManager.h"
-#include "IInputHandler.h"
+#include "interfaces/InputHandler.h"
 
 #include <SFML/Window/Event.hpp>
 #include <vector>
 
-void InputManager::addHandler(std::unique_ptr<IInputHandler> handler)
+void InputManager::addHandler(std::unique_ptr<InputHandler> handler)
 {
     // we use std::move to transfer the ownership to the vector
     // (since it's a unique_ptr, we have to do this)
@@ -13,7 +13,7 @@ void InputManager::addHandler(std::unique_ptr<IInputHandler> handler)
 
 void InputManager::processEvent(const sf::Event& event)
 {
-    std::vector<std::unique_ptr<IInputHandler>>::iterator it;
+    std::vector<std::unique_ptr<InputHandler>>::iterator it;
     // we iterate through the handlers (Chain of Responsibility)
     // in order to find the handler responsible for the event
     // (if it exists)
