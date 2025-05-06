@@ -1,3 +1,8 @@
+# Joc tubing
+
+Bibliografia este in fisierul bibliografie.txt
+Graficile folosite si oprirea brusca de la sfarsitul jocului sunt temporare.
+
 # CMake SFML Project Template
 
 This repository template should allow for a fast and hassle-free kick start of your next SFML project using CMake.

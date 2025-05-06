@@ -1,6 +1,7 @@
 #include "hud/Lives.h"
 
 #include <SFML/Graphics/Color.hpp>
+#include <exception>
 
 // debug
 #include <iostream>
@@ -41,6 +42,9 @@ void Lives::updateLives()
 		}
 		default:
 		{
+			// temporar
+			throw std::runtime_error("Game over!");
+
 			this->lifeGraphics[0].setFillColor(inactive);
 			this->lifeGraphics[1].setFillColor(inactive);
 			this->lifeGraphics[2].setFillColor(inactive);

@@ -1,0 +1,45 @@
+bibliografie:
+## pentru librăria de multimedia
+https://www.sfml-dev.org/documentation/2.6.2/
+https://www.sfml-dev.org/tutorials/2.6/
+https://www.sfml-dev.org/tutorials/2.6/graphics-draw.php
+
+
+## pentru a preveni stretchingul la redimensionarea ferestrei
+https://www.sfml-dev.org/tutorials/2.4/graphics-view.php#showing-more-when-the-window-is-resized
+
+## pentru smart pointeri
+https://learn.microsoft.com/en-us/cpp/cpp/smart-pointers-modern-cpp?view=msvc-170
+https://cplusplus.com/reference/memory/unique_ptr/
+
+## pentru SOLID
+https://youtu.be/kF7rQmSRlq0?feature=shared
+
+https://refactoring.guru/design-patterns
+
+## pentru Observer pattern (folosit la InputManager)
+https://refactoring.guru/design-patterns/observer
+
+## pentru Strategy pattern (folosit la handlers)
+https://refactoring.guru/design-patterns/strategy
+
+## pentru Chain of Responsibility (folosit la handlers)
+https://refactoring.guru/design-patterns/chain-of-responsibility
+
+## pentru ideea structurala de Facade (practic ce este InputManager)
+https://refactoring.guru/design-patterns/facade
+
+## pentru desenat linii simplu dupa coordonatele varfurilor
+https://www.sfml-dev.org/documentation/2.6.1/classsf_1_1Vertex.php
+
+## pentru cum functioneaza delta time
+https://en.sfml-dev.org/forums/index.php?topic=8452.0
+
+## pentru numere aleatoare (mai bun decat rand())
+https://codeforces.com/blog/entry/61587
+https://en.cppreference.com/w/cpp/numeric/random
+https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
+https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine
+
+## pentru tuple (reprezentarea “vietilor”)
+https://en.cppreference.com/w/cpp/utility/tuple
