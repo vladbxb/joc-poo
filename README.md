@@ -1,7 +1,7 @@
 # Joc tubing
 
-Bibliografia este in fisierul bibliografie.txt
-Graficile folosite si oprirea brusca de la sfarsitul jocului sunt temporare.
+### Bibliografia este in fisierul bibliografie.txt.
+### Graficile folosite si oprirea brusca de la sfarsitul jocului sunt temporare.
 
 # CMake SFML Project Template
 
