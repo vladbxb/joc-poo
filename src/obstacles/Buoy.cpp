@@ -4,27 +4,15 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
 
-// FOR DEBUGGING
-#include <iostream>
-
-// the reason this is commented is in the Buoy.h file
-// Buoy::Buoy(float posX)
-// {
-// 	this->createShape(posX);
-// }
-
-
+const float radius = 30.f;
 
 Buoy::Buoy()
 {
-	const float radius = 30.f;
-	const sf::Color color(sf::Color::Yellow);
-	// this creates the concrete shape inside Buoy
-	this->shape = std::make_unique<sf::CircleShape>(radius);
-	this->shape->setFillColor(color);
-	// the Buoy shall be an ellipse (oval)
-	this->shape->setScale(1.f, 2.f);
-	this->shape->setOrigin(radius / 2, 0.f);
+	this->initDefaultBools();
+	this->initShape();
+	this->initColor();
+	this->initScale();
+	this->initOrigin();
 }
 
 Buoy::Buoy(const Buoy& other)
@@ -38,6 +26,32 @@ Buoy::Buoy(const Buoy& other)
 	this->shape->setOrigin(other.shape->getOrigin().x, other.shape->getOrigin().y);
 }
 
+void Buoy::initShape()
+{
+	this->shape = std::make_unique<sf::CircleShape>(radius);
+}
+
+void Buoy::initColor()
+{
+	this->shape->setFillColor(sf::Color::Yellow);
+}
+
+void Buoy::initScale()
+{
+	// for an oval
+	this->shape->setScale(1.f, 2.f);
+}
+
+void Buoy::initOrigin()
+{
+	this->shape->setOrigin(radius / 2, 0.f);
+}
+
+void Buoy::initPosition()
+{
+	this->shape->setPosition(spawnPosX, 0.f);
+}
+
 void Buoy::update(float deltaTime)
 {
 	// moves the shape down one pixel at a time in a straight line
@@ -47,9 +61,12 @@ void Buoy::update(float deltaTime)
 
 // factory method (centralizes each obstacle type's creation)
 // in terms of X coordinate
-void Buoy::createShape(float posX)
+void Buoy::createShape(float bottomBound, float spawnPosX)
 {
-	this->shape->setPosition(posX, 0.f);
+	this->bottomBound = bottomBound;
+	this->spawnPosX = spawnPosX;
+	
+	this->initPosition();
 }
 
 std::unique_ptr<Obstacle> Buoy::clone() const

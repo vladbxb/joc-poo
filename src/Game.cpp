@@ -33,6 +33,7 @@ void Game::update(float dt)
 void Game::render()
 {
 	this->window.clear(this->backgroundColor);
+	this->player.drawAllTrails(this->window);
 	this->obstacleManager.draw(this->window);
 	this->player.draw(this->window);
 	this->window.display();
@@ -43,7 +44,7 @@ Game::Game() :
    	logicalSize(static_cast<float>(GAME_WIDTH), static_cast<float>(GAME_HEIGHT)),
    	player(this->logicalSize),
    	frameRate(FRAME_RATE),
-	obstacleManager(0.275f * GAME_WIDTH, 0.725f * GAME_WIDTH)
+	obstacleManager(0.275f * GAME_WIDTH, 0.725f * GAME_WIDTH, GAME_HEIGHT)
 {
 	this->window.setFramerateLimit(this->frameRate);
 	this->backgroundColor = BACKGROUND_COLOR;

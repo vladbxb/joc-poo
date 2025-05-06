@@ -7,17 +7,20 @@
 #include "Tube.h"
 #include "Rope.h"
 #include "InputHandlers.h"
+#include "hud/HUD.h"
 
 class Player : public Drawable, public Updatable, public Collidable
-			   // TODO: make player a mouse listener (for easy tube addition)
 {
 private:
 	const sf::Vector2f& logicalSize;
+	std::shared_ptr<int> lives;
+	std::shared_ptr<int> score;
+	float timeElapsedScore;
+	float scoreGainInterval;
 	Boat boat;
 	Tube tube;
 	Rope rope;
-public:
-	Player(const sf::Vector2f& logicalSize);
+	HUD playerHUD;
 
 	sf::Vector2f initBoatPosition() const;
 	sf::Vector2f initBoatSize() const;
@@ -32,8 +35,15 @@ public:
 	float initRopeLength() const;
 	sf::Vector2f initTubeAnchorPosition() const;
 
+	void tryIncrementingScoreByTime(float dt);
+	void incrementScoreByTime();
+	void resetElapsedTime();
+public:
+	Player(const sf::Vector2f& logicalSize);
+
 	void update(float dt) override;
 	void draw(sf::RenderTarget& target) const override;
+	void drawAllTrails(sf::RenderTarget& target) const;
 
 	void addMouseDetection(MouseInputHandler& mip);
 

@@ -15,7 +15,7 @@ private:
 	bool active;
 	float gameWidth;
 public:
-	ObstacleManager(float leftLim, float rightLim);
+	ObstacleManager(float leftLim, float rightLim, float bottomBound);
 	void draw(sf::RenderTarget& target) const override;
 	void update(float deltaTime) override;
 	// how it will be turned on or off

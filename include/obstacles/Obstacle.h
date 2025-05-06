@@ -11,9 +11,20 @@ class Obstacle : public Drawable, public Updatable, public Collidable
 {
 protected:
 	std::unique_ptr<sf::Shape> shape;
+	bool shouldBeDeleted;
+	bool hit;
+	float bottomBound;
+	float spawnPosX;
+
+	void markForDeletion();
+	void markHit();
+	void initDefaultBools();
 public:
-	virtual void createShape(float posX) = 0;
+	virtual void createShape(float bottomBound, float spawnPosX) = 0; // pure
 	void draw(sf::RenderTarget& target) const override;
+
+	void tryMarkingForDeletion();
+	bool isHit() const;
 
 	sf::FloatRect getBounds() const override;
 	void onCollision(Collidable& other) override;

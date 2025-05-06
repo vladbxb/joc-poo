@@ -3,25 +3,15 @@
 #include <exception>
 #include <random>
 
-// REMOVE LATER (for debugging purposes)
-#include <iostream>
-
-// this is bad practice, needs to be changed later
-const unsigned int GAME_WIDTH = 1280;
-const unsigned int GAME_HEIGHT = 720;
-
-const float LEFT_LIM_X = 0.275f * GAME_WIDTH;
-const float RIGHT_LIM_X = 0.725f * GAME_WIDTH;
-
 // WARNING: the spawn interval must be set manually with the setter
-// only for now until i figure out scene / state management
-ObstacleSpawner::ObstacleSpawner(const std::vector<std::unique_ptr<Obstacle>>& obstacleTemplate, float leftLim, float rightLim) : 
+ObstacleSpawner::ObstacleSpawner(const std::vector<std::unique_ptr<Obstacle>>& obstacleTemplate, float leftLim, float rightLim, float bottomBound) : 
 	obstacleTemplate(obstacleTemplate), 
 	rng(std::random_device{}()), 
 	timeSinceLastSpawn(0.f), 
 	spawnInterval(0.f), 
 	leftLim(leftLim), 
-	rightLim(rightLim) 
+	rightLim(rightLim),
+	bottomBound(bottomBound)
 {}
 
 std::unique_ptr<Obstacle> ObstacleSpawner::trySpawning(float deltaTime)
@@ -53,7 +43,7 @@ std::unique_ptr<Obstacle> ObstacleSpawner::spawn()
 	this->resetElapsedTime();
 	std::unique_ptr<Obstacle> spawned = this->cloneRandomObstacle();
 	int posX = this->getRandomXValue(this->leftLim, this->rightLim);
-	spawned->createShape(posX);
+	spawned->createShape(this->bottomBound, posX);
 	return spawned;
 }
 
@@ -90,5 +80,3 @@ void ObstacleSpawner::setSpawnInterval(float spawnInterval)
 	}
 	this->spawnInterval = spawnInterval;
 }
-
-

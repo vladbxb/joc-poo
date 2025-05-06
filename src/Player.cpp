@@ -3,6 +3,12 @@
 Player::Player(const sf::Vector2f& logicalSize) : 
 	logicalSize(logicalSize),
 
+	lives(std::make_shared<int>(3)),
+
+	score(std::make_shared<int>(0)),
+	scoreGainInterval(1.f),
+	timeElapsedScore(0.f),
+
 	boat(this->initBoatPosition(),
 		 this->initBoatSize(), 
 		 this->initBoatOrigin(), 
@@ -15,12 +21,18 @@ Player::Player(const sf::Vector2f& logicalSize) :
 		 this->initTubeColor(),
 		 this->initRopeLength(),
 		 this->initTubeAnchorPosition(),
-		 this->boat.getAnchor()),
+		 this->boat.getAnchor(),
+		 logicalSize.y,
+		 this->lives,
+		 this->score),
 
 	rope(this->boat.getAnchor(),
-		 this->tube.getAnchor())
-{}
+		 this->tube.getAnchor()),
 
+
+	playerHUD(logicalSize, this->lives, this->score)
+	
+{}
 
 
 sf::Vector2f Player::initBoatPosition() const
@@ -91,10 +103,33 @@ sf::Vector2f Player::initTubeAnchorPosition() const
 	return this->initTubePosition();
 }
 
+void Player::tryIncrementingScoreByTime(float dt)
+{
+	if (this->timeElapsedScore < this->scoreGainInterval)
+		this->timeElapsedScore += dt;
+	else
+	{
+		this->incrementScoreByTime();
+		this->resetElapsedTime();
+	}
+}
+
+void Player::incrementScoreByTime()
+{
+	this->tube.incrementScoreByTime();
+}
+
+void Player::resetElapsedTime()
+{
+	this->timeElapsedScore = 0.f;
+}
+
 void Player::update(float dt)
 {
+	this->tryIncrementingScoreByTime(dt);
 	this->tube.update(dt);
 	this->rope.update(dt);
+	this->playerHUD.update(dt);
 }
 
 void Player::draw(sf::RenderTarget& target) const
@@ -102,6 +137,12 @@ void Player::draw(sf::RenderTarget& target) const
 	this->boat.draw(target);
 	this->rope.draw(target);
 	this->tube.draw(target);
+	this->playerHUD.draw(target);
+}
+
+void Player::drawAllTrails(sf::RenderTarget& target) const
+{
+	this->tube.drawAllTrails(target);
 }
 
 void Player::addMouseDetection(MouseInputHandler& mip)

@@ -9,5 +9,7 @@ float getAngle();
 
 float getXPos();
 float getYPos();
+float getYPosAirborne();
 
 sf::Vector2f calculateTubePos(float mouseX, sf::Vector2f boatAnchor, float ropeLength);
+sf::Vector2f calculateTubePosAirborne(float mouseX, sf::Vector2f boatAnchor, float ropeLength);

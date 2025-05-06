@@ -4,20 +4,19 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
 
-// Rock::Rock(float posX)
+const float radius = 35.f;
+
+// Rock::Rock(float bottomBound, float spawnPosX) : Obstacle(bottomBound, spawnPosX)
 // {
-// 	this->createShape(posX);
+// 	this->createShape();
 // }
 
 Rock::Rock()
 {
-	const float radius = 35.f;
-	// we color the Rock a slightly light grey
-	const sf::Color color(100, 100, 100);
-	// this creates the concrete shape inside Rock
-	this->shape = std::make_unique<sf::CircleShape>(radius);
-	this->shape->setFillColor(color);
-	this->shape->setOrigin(radius / 2, 0.f);
+	this->initDefaultBools();
+	this->initShape();
+	this->initColor();
+	this->initOrigin();
 }
 
 Rock::Rock(const Rock& other)
@@ -31,17 +30,42 @@ Rock::Rock(const Rock& other)
 	this->shape->setOrigin(other.shape->getOrigin().x, other.shape->getOrigin().y);
 }	
 
+void Rock::initShape()
+{
+	// this creates the concrete shape inside Rock
+	this->shape = std::make_unique<sf::CircleShape>(radius);
+}
+
+void Rock::initColor()
+{
+	// color the Rock a slightly light grey
+	const sf::Color color(100, 100, 100);
+	this->shape->setFillColor(color);
+}
+
+void Rock::initOrigin()
+{
+	this->shape->setOrigin(radius / 2, 0.f);
+}
+
+void Rock::initPosition()
+{
+	this->shape->setPosition(this->spawnPosX, 0.f);
+}
+
 void Rock::update(float deltaTime)
 {
 	// moves the shape down one pixel at a time in a straight line
-	this->shape->move(0.f, 130.f * deltaTime);
+	// this->shape->move(0.f, 130.f * deltaTime);
+	this->shape->move(0.f, 180.f * deltaTime);
 }
 
-// factory method (centralizes each obstacle type's creation)
-// in terms of X coordinate
-void Rock::createShape(float posX)
+void Rock::createShape(float bottomBound, float spawnPosX)
 {
-	this->shape->setPosition(posX, 0.f);
+	this->bottomBound = bottomBound;
+	this->spawnPosX = spawnPosX;
+
+	this->initPosition();
 }
 
 std::unique_ptr<Obstacle> Rock::clone() const

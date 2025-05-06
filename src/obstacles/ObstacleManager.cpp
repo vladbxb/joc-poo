@@ -8,8 +8,8 @@
 // FOR DEBUGGING
 #include <iostream>
 
-ObstacleManager::ObstacleManager(float leftLim, float rightLim) : 
-	spawner(this->obstacleTemplate, leftLim, rightLim), 
+ObstacleManager::ObstacleManager(float leftLim, float rightLim, float bottomBound) : 
+	spawner(this->obstacleTemplate, leftLim, rightLim, bottomBound), 
 	active(false),
 	gameWidth(rightLim - leftLim)
 {}

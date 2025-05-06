@@ -35,6 +35,11 @@ float getYPos(float boatAnchorY, float ropeLength, float angle)
 	return boatAnchorY + ropeLength * std::cos(angle);
 }
 
+float getYPosAirborne(float boatAnchorY, float ropeLength, float angle)
+{
+	return boatAnchorY + ropeLength * std::cos(angle) * 0.8f;
+}
+
 
 sf::Vector2f calculateTubePos(float mouseX, sf::Vector2f boatAnchor, float ropeLength)
 {
@@ -44,6 +49,19 @@ sf::Vector2f calculateTubePos(float mouseX, sf::Vector2f boatAnchor, float ropeL
 
 	float x = getXPos(boatAnchor.x, ropeLength, angle);
 	float y = getYPos(boatAnchor.y, ropeLength, angle);
+
+	sf::Vector2f tubePos(x, y);
+	return tubePos;
+}
+
+sf::Vector2f calculateTubePosAirborne(float mouseX, sf::Vector2f boatAnchor, float ropeLength)
+{
+	float dx = getXDiff(mouseX, boatAnchor.x);
+
+	float angle = getAngle(dx, ropeLength);
+
+	float x = getXPos(boatAnchor.x, ropeLength, angle);
+	float y = getYPosAirborne(boatAnchor.y, ropeLength, angle);
 
 	sf::Vector2f tubePos(x, y);
 	return tubePos;

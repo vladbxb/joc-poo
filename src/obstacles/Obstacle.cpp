@@ -3,13 +3,43 @@
 
 #include <iostream>
 
-// createShape() method doesn't have a definition here because
-// it's a pure, virtual function (each "type" of obstacle should
-// override it instead)
+// Obstacle::Obstacle(float bottomBound, float spawnPosX) : 
+// 	bottomBound(bottomBound), 
+// 	spawnPosX(spawnPosX),
+// 	hit(false),
+// 	shouldBeDeleted(false)
+// {}
 
 void Obstacle::draw(sf::RenderTarget& target) const
 {
 	target.draw(*this->shape);
+}
+
+void Obstacle::initDefaultBools()
+{
+	this->hit = false;
+	this->shouldBeDeleted = false;
+}
+
+void Obstacle::tryMarkingForDeletion()
+{
+	if (this->shape->getPosition().y >= bottomBound)
+		this->markForDeletion();
+}
+
+void Obstacle::markForDeletion()
+{
+	this->hit = true;
+}
+
+bool Obstacle::isHit() const
+{
+	return this->hit;
+}
+
+void Obstacle::markHit()
+{
+	this->hit = true;
 }
 
 sf::FloatRect Obstacle::getBounds() const
@@ -19,9 +49,13 @@ sf::FloatRect Obstacle::getBounds() const
 
 void Obstacle::onCollision(Collidable& other)
 {
+	this->markHit();
 	if (dynamic_cast<Player*>(&other))
 	{
-		std::cout << "Obstacle hit player!\n";
+		if (this->isHit() == false)
+		{
+			std::cout << "Obstacle hit player!\n";
+		}
 	}
 }
 

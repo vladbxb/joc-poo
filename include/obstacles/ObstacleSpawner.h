@@ -15,11 +15,12 @@ private:
 	// game bounds
 	float leftLim;
 	float rightLim;
+	float bottomBound;
 
 	std::mt19937 rng;
 
 public:
-	ObstacleSpawner(const std::vector<std::unique_ptr<Obstacle>>& obstacleTemplate, float leftLim, float rightLim);
+	ObstacleSpawner(const std::vector<std::unique_ptr<Obstacle>>& obstacleTemplate, float leftLim, float rightLim, float bottomBound);
 
 	std::unique_ptr<Obstacle> trySpawning(float deltaTime);
 	std::unique_ptr<Obstacle> spawn();
