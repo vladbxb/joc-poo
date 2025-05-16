@@ -1,4 +1,6 @@
 # Joc tubing
+### Obiectiv joc:
+Jucatorul este tras de barca cu un colac. Acesta trebuie sa evite obstacolele si sa sara peste ele pentru a obtine punctaj mai mare. Pentru a sari, jucatorul va apasa Left-Click pentru a ramane in aer pentru cateva secunde. Cand acesta este pe apa, daca se va lovi de obstacole, va fi imediat invulnerabil la lovituri pentru cateva secunde. Jucatorul acumuleaza cate un punct pentru fiecare secunda supravietuita, si cate 25 de puncte pentru sarirea peste obstacole. Peste unele obstacole se poate sari, iar peste altele nu.
 
 ### Bibliografia este in fisierul bibliografie.txt.
 ### Graficile folosite si oprirea brusca de la sfarsitul jocului sunt temporare.
