@@ -27,6 +27,7 @@ private:
 public:
 	// method for adding new handlers
 	void addHandler(std::unique_ptr<InputHandler> handler);
+	void clearHandlers() { handlers.clear(); }
 
 	void processEvent(const sf::Event& event);
 };

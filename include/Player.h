@@ -9,7 +9,7 @@
 #include "InputHandlers.h"
 #include "hud/HUD.h"
 
-class Player : public Drawable, public Updatable, public Collidable
+class Player : public Drawable, public Updatable, public Collidable, public MouseListener, public std::enable_shared_from_this<Player>
 {
 private:
 	const sf::Vector2f& logicalSize;
@@ -45,8 +45,12 @@ public:
 	void draw(sf::RenderTarget& target) const override;
 	void drawAllTrails(sf::RenderTarget& target) const;
 
-	void addMouseDetection(MouseInputHandler& mip);
+	void onMouseMoved(int x, int y) override { this->tube.onMouseMoved(x, y); }
+	void onMousePressed(sf::Mouse::Button button, int x, int y) override { this->tube.onMousePressed(button, x, y); }
+	void onMouseReleased(sf::Mouse::Button button, int x, int y) override {}
 
 	sf::FloatRect getBounds() const override;
 	void onCollision(Collidable& other) override;
+
+	std::shared_ptr<int> getPlayerLives() { return lives; }
 };

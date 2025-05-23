@@ -2,6 +2,7 @@
 #include "interfaces/InputHandler.h"
 
 #include <SFML/Window/Event.hpp>
+#include <iostream>
 #include <vector>
 
 void InputManager::addHandler(std::unique_ptr<InputHandler> handler)

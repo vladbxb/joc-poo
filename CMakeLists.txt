@@ -37,6 +37,11 @@ add_executable(main
 	src/hud/Score.cpp
 	src/hud/Lives.cpp
 	src/states/PlayState.cpp
+	src/states/EndState.cpp
+	src/states/StartState.cpp
+	src/buttons/PlayButton.cpp
+	src/buttons/RectangularButton.cpp
+	src/buttons/RestartButton.cpp
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE sfml-graphics)

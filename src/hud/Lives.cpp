@@ -43,7 +43,7 @@ void Lives::updateLives()
 		default:
 		{
 			// temporar
-			throw std::runtime_error("Game over!");
+			// throw std::runtime_error("Game over!");
 
 			this->lifeGraphics[0].setFillColor(inactive);
 			this->lifeGraphics[1].setFillColor(inactive);

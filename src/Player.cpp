@@ -145,11 +145,11 @@ void Player::drawAllTrails(sf::RenderTarget& target) const
 	this->tube.drawAllTrails(target);
 }
 
-void Player::addMouseDetection(MouseInputHandler& mip)
-{
-	// pass the pointer not the object itself
-	mip.addListener(&this->tube);
-}
+// void Player::addMouseDetection(MouseInputHandler& mip)
+// {
+// 	// pass the pointer not the object itself
+// 	mip.addListener(&this->tube);
+// }
 
 sf::FloatRect Player::getBounds() const
 {

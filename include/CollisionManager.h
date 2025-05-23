@@ -7,5 +7,5 @@
 class CollisionManager
 {
 public:
-	void checkPlayerCollidesObstacles(Player& player, const std::vector<std::unique_ptr<Obstacle>>& obstacles) const;
+	void checkPlayerCollidesObstacles(std::shared_ptr<Player> player, const std::vector<std::unique_ptr<Obstacle>>& obstacles) const;
 };

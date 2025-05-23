@@ -10,17 +10,21 @@
 class PlayState : public GameState
 {
 public:
-	PlayState(sf::RenderWindow& window, InputManager& inputManager, sf::Vector2f& logicalSize);
+	PlayState(sf::RenderWindow& window, InputManager& inputManager, const sf::Vector2f& logicalSize);
 
 	void init() override;
 	void update(float dt) override;
 	void render() override;
+	
+	std::unique_ptr<GameState> getNewState() override;
 private:
 	sf::RenderWindow& window;
 	InputManager& inputManager;
-	sf::Vector2f& logicalSize;
+	const sf::Vector2f& logicalSize;
 	sf::Color backgroundColor;
-	Player player;
+	std::shared_ptr<Player> player;
 	ObstacleManager obstacleManager;
 	CollisionManager collisionManager;
+
+	bool gameOver;
 };

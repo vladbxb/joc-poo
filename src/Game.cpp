@@ -1,4 +1,6 @@
 #include "Game.h"
+
+#include "states/StartState.h"
 #include <string>
 
 const unsigned int GAME_WIDTH = 1280;
@@ -20,7 +22,7 @@ void Game::processEvents()
 Game::Game() : 
 	window(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), GAME_NAME),
    	logicalSize(static_cast<float>(GAME_WIDTH), static_cast<float>(GAME_HEIGHT)),
-	gameState(std::make_unique<PlayState>(this->window, this->inputManager, this->logicalSize)),
+	gameState(std::make_unique<StartState>(this->window, this->inputManager, this->logicalSize)),
    	frameRate(FRAME_RATE)
 {
 	this->window.setFramerateLimit(this->frameRate);
@@ -35,6 +37,12 @@ void Game::run()
 		sf::Time time = this->clock.restart();
 		float dt = time.asSeconds();
 		this->processEvents();
+		std::unique_ptr<GameState> nextState = gameState->getNewState();
+		if (nextState)
+		{
+			inputManager.clearHandlers();
+			gameState = std::move(nextState);
+		}
 		gameState->run(dt);
 	}
 }

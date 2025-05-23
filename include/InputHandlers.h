@@ -12,13 +12,10 @@ class MouseInputHandler : public InputHandler
 private:
 	// inheriting class doesn't actually own the listeners
 	// use raw pointers
-	std::vector<MouseListener*> listeners;
+	std::vector<std::weak_ptr<MouseListener>> listeners;
 public:
 	// the subscribe method
-	void addListener(MouseListener* listener);
-
-	// the unsubscribe method
-	void removeListener(MouseListener* listener);
+	void addListener(std::shared_ptr<MouseListener> listener);
 
 	bool handleEvent(const sf::Event& event) override;
 };

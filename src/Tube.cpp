@@ -300,7 +300,6 @@ void Tube::onCollision(Collidable& other)
 			if (this->isAirborne())
 			{
 				this->incrementScoreByJump();
-				std::cout << "Player has jumped over rock!\n";
 			}
 			else
 			{
@@ -309,7 +308,6 @@ void Tube::onCollision(Collidable& other)
 					this->loseLife();
 					this->becomeInvulnerable();
 				}
-				std::cout << "Player collides with rock!\n";
 			}
 		}
 	}
@@ -322,14 +320,14 @@ void Tube::onCollision(Collidable& other)
 				this->loseLife();
 				this->becomeInvulnerable();
 			}
-			std::cout << "Player collides with buoy! They can't jump over!\n";
 		}
 	}
 }
 
-void Tube::onMousePressed(sf::Mouse::Button, int x, int y)
+void Tube::onMousePressed(sf::Mouse::Button button, int x, int y)
 {
-	this->jump();
+	if (button == sf::Mouse::Button::Left)
+		this->jump();
 }
 
 sf::Vector2f& Tube::getAnchor()

@@ -1,46 +1,69 @@
 #include "InputHandlers.h"
 
-void MouseInputHandler::addListener(MouseListener* listener)
-{
-    listeners.push_back(listener);
-}
+#include <iostream>
 
-void MouseInputHandler::removeListener(MouseListener* listener)
+void MouseInputHandler::addListener(std::shared_ptr<MouseListener> listener)
 {
-    std::vector<MouseListener*>::iterator it;
-    for (it = this->listeners.begin(); it != this->listeners.end(); ++it)
-    {
-        if (*it == listener)
-        {
-            listeners.erase(it);
-            break;
-        }
-    }
+    listeners.emplace_back(listener);
 }
 
 bool MouseInputHandler::handleEvent(const sf::Event& event)
 {
+	std::vector<std::weak_ptr<MouseListener>>::iterator cit = listeners.begin();
+	while (cit != listeners.end())
+	{
+		// if reference count is zero
+		if (cit->expired())
+		{
+			// erase listener from vector
+			cit = listeners.erase(cit);
+		}
+		else
+		{
+			++cit;
+		}
+	}
+
     switch (event.type)
     {
     case sf::Event::MouseMoved:
     {
-        std::vector<MouseListener*>::iterator it;
+        std::vector<std::weak_ptr<MouseListener>>::iterator it;
         for (it = listeners.begin(); it != listeners.end(); ++it)
-            (*it)->onMouseMoved(event.mouseMove.x, event.mouseMove.y);
+		{
+			// make sure listener shared pointer has not expired
+			std::shared_ptr<MouseListener> currentListener = it->lock();
+			if (currentListener)
+			{
+            	currentListener->onMouseMoved(event.mouseMove.x, event.mouseMove.y);
+			}
+		}
         return true;
     }
     case sf::Event::MouseButtonPressed:
     {
-        std::vector<MouseListener*>::iterator it;
+        std::vector<std::weak_ptr<MouseListener>>::iterator it;
         for (it = listeners.begin(); it != listeners.end(); ++it)
-            (*it)->onMousePressed(event.mouseButton.button, event.mouseButton.x, event.mouseButton.y);
+		{
+			std::shared_ptr<MouseListener> currentListener = it->lock();
+			if (currentListener)
+			{
+            	currentListener->onMousePressed(event.mouseButton.button, event.mouseButton.x, event.mouseButton.y);
+			}
+		}
         return true;
     }
     case sf::Event::MouseButtonReleased:
     {
-        std::vector<MouseListener*>::iterator it;
+        std::vector<std::weak_ptr<MouseListener>>::iterator it;
         for (it = listeners.begin(); it != listeners.end(); ++it)
-            (*it)->onMouseReleased(event.mouseButton.button, event.mouseButton.x, event.mouseButton.y);
+		{
+			std::shared_ptr<MouseListener> currentListener = it->lock();
+			if (currentListener)
+			{
+            	currentListener->onMouseReleased(event.mouseButton.button, event.mouseButton.x, event.mouseButton.y);
+			}
+		}
         return true;
     }
     default:

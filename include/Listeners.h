@@ -3,6 +3,8 @@
 // this is where the listeners go, the actual "subscribers"
 // which inherit this interface, so they can receive the corresponding input
 
+#include <SFML/Window/Mouse.hpp>
+
 class MouseListener
 {
 public:
