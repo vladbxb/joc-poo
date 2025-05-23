@@ -1,6 +1,32 @@
 # Joc tubing
 ## Obiectiv joc:
 Jucatorul este tras de barca cu un colac. Acesta trebuie sa evite obstacolele si sa sara peste ele pentru a obtine punctaj mai mare. Pentru a sari, jucatorul va apasa Left-Click pentru a ramane in aer pentru cateva secunde. Cand acesta este pe apa, daca se va lovi de obstacole, va fi imediat invulnerabil la lovituri pentru cateva secunde. Jucatorul acumuleaza cate un punct pentru fiecare secunda supravietuita, si cate 25 de puncte pentru sarirea peste obstacole. Peste unele obstacole se poate sari, iar peste altele nu.
+## Cerinte indeplinite:
+### separarea codului din clase în fișiere header (.h sau.hpp) și surse (.cpp) (fisierele sunt separate pe folderele include si src)
+- [x] clasele mici și legate între ele se pot afla în aceeași pereche de fișiere header-sursă
+- [x] fara using namespace std
+### mosteniri
+- [x] minim o clasă de bază și 3 clase derivate din aceeași ierarhie (MouseListener > Button > RectangularButton > PlayButton, de exemplu)
+- [x] ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită (MouseListener este o interfata)
+### functii virtuale (pure)
+- [x] minim o funcție virtuală va fi specifică temei (i.e. nu simple citiri/afișări sau preluate din biblioteci i.e. draw/update/render) (metoda update din Updatable)
+- [x] funcțiile virtuale vor fi apelate prin pointeri la clasa de bază (gameState-\>run() in Game.cpp, care este un std::unique\_ptr\<GameState\>)
+- [x] pointerii la clasa de bază vor fi atribute ale altei clase, nu doar niște pointeri/referințe în main (exact, asta inseamna mostenirea de mai sus)
+### constructori virtuali (clone) - sunt necesari, dar nu se consideră funcții specifice temei (metoda clone din obstacles/Obstacle.h)
+### apelarea constructorului din clasa de bază din constructori din derivate (buttons/PlayButton.cpp, apeleaza constructorul RectangularButton in lista de initializare)
+### clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază 
+- [x] suprascriere cc/op= pentru copieri/atribuiri corecte, copy and swap (obstacles/Rock.cpp, se copiaza forma)
+- [x] dynamic\_cast/std::dynamic\_pointer\_cast pentru downcast cu sens (Tube.cpp, metoda onCollision(Collidable& other) pentru a determina cate o actiune pentru coliziunea cu cate un obiect in parte)
+- [x] smart pointers (recomandat) (gameState din Game.cpp si multe multe altele)
+### exceptii (sunt folosite exceptii, dar nu clase de exceptii)
+- [ ] ierarhie proprie cu baza std::exception sau derivată din std::exception
+- [ ] minim 3 clase pentru erori specifice distincte. Clasele de excepții trebuie să trateze categorii de erori distincte (exemplu de erori echivalente: citire fișiere cu diverse extensii)
+- [x] utilizare cu sens: de exemplu, throw în constructor, try/catch în main funcții și atribute statice
+- [x] funcții și atribute statice
+- [x] STL (peste tot)
+- [x] cat mai multe const
+- [x] funcții de nivel înalt, de eliminat cât mai mulți getters/setters/funcții low-level (foarte putini getteri sunt folositi, s-a incercat crearea a cat mai multor abstractii pentru simplitate)
+
 ## Structura codului:
 ### Clasa Game
 Clasa Game este folosita pentru a rula jocul principal. Ea gestioneaza tot procesul de rulare al jocului, comportandu-se ca un coordonator al fiecarei componente.
